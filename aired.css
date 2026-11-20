@@ -11,7 +11,13 @@
 .game button:hover { background: #f2e9e7; }
 .game button:focus-visible { outline: 3px solid #3878bf; outline-offset: 3px; }
 #reveal, #complete { margin-top: 1.35rem; }
-#reveal { border-left: .27rem solid var(--accent); padding: .15rem 0 .15rem 1rem; }
+#reveal { --tone: #6a4c13; background: #fff3d8; border-left: .35rem solid var(--tone); border-radius: .35rem; padding: 1rem 1.15rem; }
+#reveal[data-state="right"] { --tone: #175535; background: #e4f4e9; }
+#reveal[data-state="wrong"] { --tone: #8b2230; background: #fbe8e9; }
+#verdict { display: flex; align-items: center; gap: .55rem; color: var(--tone); margin: 0 0 .6rem; }
+#mark { display: inline-grid; place-items: center; flex: none; width: 1.45em; height: 1.45em; border-radius: 50%; background: var(--tone); color: white; font: bold 1em/1 system-ui, sans-serif; }
+#finding { margin: 1rem 0 .25rem; font-weight: 700; }
+#finding + p { margin-top: 0; }
 #your-choice { color: #61565f; font-size: .95rem; }
 #reason, #recap { max-width: 59ch; line-height: 1.5; }
 #source { display: inline-block; color: var(--accent); padding: .65rem 0; }

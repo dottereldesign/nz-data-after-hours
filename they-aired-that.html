@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>They Aired That? · NZ Data After Hours</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="aired.css">
+  <link rel="stylesheet" href="aired.css?v=verdict1">
   <script defer src="aired-cases.js"></script>
-  <script defer src="aired.js"></script>
+  <script defer src="aired.js?v=verdict1"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -33,9 +33,10 @@
         <button type="button">Crossed the line</button>
         <button type="button">Fair game</button>
       </div>
-      <section id="reveal" hidden aria-labelledby="finding">
+      <section id="reveal" hidden aria-labelledby="verdict">
+        <h3 id="verdict" tabindex="-1"><span id="mark" aria-hidden="true"></span> <span id="verdict-text"></span></h3>
         <p id="your-choice"></p>
-        <h3 id="finding" tabindex="-1"></h3>
+        <p id="finding"></p>
         <p id="reason"></p>
         <a id="source">Read the BSA decision</a>
         <button type="button" id="next">Next case →</button>
