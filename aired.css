@@ -1,0 +1,19 @@
+.game { max-width: 49rem; padding-top: clamp(1.8rem, 5vw, 4rem); }
+.game h1 { font-size: clamp(2.8rem, 7vw, 5.7rem); }
+.game h2 { font-size: clamp(1.75rem, 4.4vw, 2.85rem); line-height: 1.14; letter-spacing: -.035em; }
+.game h3 { font: 700 clamp(1.4rem, 3vw, 1.9rem)/1.2 Georgia, serif; margin: .4rem 0; }
+.game h2:focus, .game h3:focus { outline: none; }
+.game [hidden] { display: none; }
+.progress { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; color: #59515a; font-size: .92rem; }
+.progress progress { flex: 1; height: .35rem; min-width: 1rem; accent-color: var(--accent); }
+#choices { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: 1.7rem; }
+.game button { border: 1px solid var(--ink); background: white; color: var(--ink); border-radius: .3rem; min-height: 50px; padding: .6rem 1rem; line-height: 1.2; font-family: inherit; font-size: 1rem; font-weight: 650; cursor: pointer; }
+.game button:hover { background: #f2e9e7; }
+.game button:focus-visible { outline: 3px solid #3878bf; outline-offset: 3px; }
+#reveal, #complete { margin-top: 1.35rem; }
+#reveal { border-left: .27rem solid var(--accent); padding: .15rem 0 .15rem 1rem; }
+#your-choice { color: #61565f; font-size: .95rem; }
+#reason, #recap { max-width: 59ch; line-height: 1.5; }
+#source { display: inline-block; color: var(--accent); padding: .65rem 0; }
+#next, #restart { display: block; margin-top: .6rem; background: var(--ink); color: white; }
+#next:hover, #restart:hover { background: var(--accent); }

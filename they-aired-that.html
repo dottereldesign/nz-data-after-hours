@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>They Aired That? · NZ Data After Hours</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="aired.css">
+  <script defer src="aired-cases.js"></script>
+  <script defer src="aired.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="frame header-row">
+      <a class="wordmark" href="index.html">NZ Data <em>After Hours</em></a>
+      <nav aria-label="Pages">
+        <a href="index.html">Favourites</a>
+        <a href="potential.html">Potential</a>
+        <a href="fresh-leads.html">Fresh Leads</a>
+        <a href="parliament.html">Parliament</a>
+        <a href="they-aired-that.html" aria-current="page">They Aired That?</a>
+      </nav>
+    </div>
+  </header>
+  <main class="frame game" id="main">
+    <h1>They Aired That?</h1>
+    <noscript>Enable JavaScript to vote and reveal each ruling.</noscript>
+    <section id="round" hidden>
+      <div class="progress"><span id="counter"></span><progress aria-label="Case number"></progress></div>
+      <h2 id="question" tabindex="-1"></h2>
+      <div id="choices" aria-label="Your call" role="group">
+        <button type="button">Crossed the line</button>
+        <button type="button">Fair game</button>
+      </div>
+      <section id="reveal" hidden aria-labelledby="finding">
+        <p id="your-choice"></p>
+        <h3 id="finding" tabindex="-1"></h3>
+        <p id="reason"></p>
+        <a id="source">Read the BSA decision</a>
+        <button type="button" id="next">Next case →</button>
+      </section>
+    </section>
+    <section id="complete" hidden>
+      <h2 tabindex="-1">You’ve reached the last case.</h2>
+      <p id="recap"></p>
+      <button id="restart" type="button">Play again</button>
+    </section>
+  </main>
+</body>
+</html>

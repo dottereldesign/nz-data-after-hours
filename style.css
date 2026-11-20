@@ -58,3 +58,4 @@ p a:hover { text-decoration-thickness: 2px; }
 .lead-jumps { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
 .lead-jumps a { padding: .65rem 0; color: var(--accent); text-decoration: underline; border: 0; }
 .lead-jumps a:hover { color: var(--ink); }
+.header-row nav { flex-wrap: wrap; row-gap: 0; }
