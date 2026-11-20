@@ -1,0 +1,51 @@
+* { box-sizing: border-box; }
+
+:root {
+  color-scheme: light;
+  --ink: #16151a;
+  --paper: #fcfbf8;
+  --accent: #a82035;
+  --rule: #c6bfc0;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+.frame { width: min(76rem, 90%); margin-inline: auto; }
+a { color: inherit; text-underline-offset: .19em; }
+a:focus-visible { outline: 3px solid #3878bf; outline-offset: 4px; }
+.skip { position: absolute; transform: translateY(-160%); background: white; color: black; padding: .7rem; }
+.skip:focus { transform: translateY(0); z-index: 2; }
+
+.masthead { background: var(--ink); color: white; }
+.header-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.wordmark { font-size: 1.45rem; font-weight: 750; letter-spacing: -.05em; text-decoration: none; }
+.wordmark em { color: #ff9daa; font-family: "Georgia", serif; }
+nav { display: flex; gap: clamp(1rem, 3vw, 2.4rem); }
+nav a { display: block; padding: 1.35rem 0 1.1rem; text-decoration: none; border-bottom: 4px solid transparent; }
+nav a:hover, nav a[aria-current] { color: #ffb5be; border-color: currentColor; }
+
+main { padding-block: clamp(2.6rem, 6vw, 5.5rem) 5rem; }
+h1 { margin: 0; padding-bottom: .26em; font: 700 clamp(3.6rem, 9vw, 7rem)/1 Georgia, serif; letter-spacing: -.075em; border-bottom: .45rem double var(--ink); }
+article { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(2rem, 7vw, 7rem); padding: clamp(2rem, 4vw, 3.8rem) 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 2rem; }
+h2 { margin: 0; font: 700 clamp(1.9rem, 3.5vw, 3.35rem)/1.06 Georgia, serif; letter-spacing: -.05em; }
+h2 a { text-decoration: none; }
+h2 a:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; }
+.number { color: var(--accent); font-variant-numeric: lining-nums; }
+.subtitle { display: block; margin-top: .85rem; font: 500 1.05rem/1.4 "Segoe UI", sans-serif; letter-spacing: 0; color: #595461; }
+.copy { max-width: 68ch; font-size: 1.08rem; line-height: 1.7; }
+p { margin: 0; }
+p + p { margin-top: 1rem; }
+p a { color: var(--accent); }
+p a:hover { text-decoration-thickness: 2px; }
+
+@media (max-width: 48rem) {
+  .header-row { flex-direction: column; align-items: start; gap: 0; padding-top: 1rem; }
+  nav a { padding: .85rem 0 .7rem; }
+  article { grid-template-columns: 1fr; gap: 1.2rem; }
+  .copy { font-size: 1rem; }
+}
