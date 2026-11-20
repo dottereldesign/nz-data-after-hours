@@ -1,0 +1,31 @@
+.grants { max-width: 64rem; }
+.grants h1 { font-size: clamp(2.7rem,7vw,5.8rem); }
+.grants section { padding-block: 1.75rem; }
+.grants h2 { font-size: clamp(1.65rem,4vw,2.6rem); margin-bottom: 1rem; }
+.grants #query { width: 100%; min-height: 3.2rem; background: white; padding: .65rem 1rem; border: 1px solid #655b60; border-radius: .35rem; font: inherit; font-size: 1.12rem; }
+.grants button, .grants select { font: inherit; color: var(--ink); background: white; border: 1px solid #afa7aa; border-radius: .3rem; min-height: 44px; padding: .45rem .7rem; cursor: pointer; }
+.grants button:hover { background: #f4ecec; }
+.grants :is(input,button,select,summary):focus-visible { outline: 3px solid #3878bf; outline-offset: 2px; }
+.grants .examples, #towns { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem; }
+.grants .examples button, .grants #active button { color: var(--accent); text-decoration: underline; background: transparent; border: 0; }
+.grants summary { cursor: pointer; padding: .8rem 0; font-weight: 650; }
+.grants .controls { display: flex; flex-wrap: wrap; gap: .65rem 1rem; }
+.grants .controls label { flex: 1 1 10rem; display: grid; gap: .3rem; font-size: .94rem; }
+.grants select { width: 100%; min-width: 0; }
+#status, .grants footer { font-size: .95rem; color: #534c51; margin-top: .6rem; }
+.grant-record { border-top: 1px solid var(--rule); padding: .9rem 0; }
+.grant-record h3 { margin: .2rem 0; font-size: 1.1rem; overflow-wrap: anywhere; }
+.grant-record p { margin: .25rem 0; line-height: 1.45; }
+.grant-record small { font-size: .88rem; }
+.grant-record button { min-height: 44px; margin-top: .35rem; }
+.grants .district { border-top: .3rem double var(--ink); }
+#chart { margin: 1.25rem 0; }
+.bar-label { display: flex; justify-content: space-between; gap: .65rem; margin-top: .85rem; }
+.bar-track { height: .8rem; background: #eae5e3; margin-top: .35rem; }
+.bar-fill { height: 100%; background: var(--accent); }
+.bar-fill.award { background: #267654; }
+#shared,.grants details p,.grants footer { line-height: 1.5; }
+#district-records { margin-top: .8rem; }
+.grants footer { border-top: 1px solid var(--rule); padding-top: 1rem; }
+.grants [hidden] {display:none}
+.grant-record button + button { margin-left: .4rem; }

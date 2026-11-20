@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Who Got the Pokie Money? · NZ Data After Hours</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pokie.css">
+  <script defer src="pokie-data/index.js"></script>
+  <script defer src="pokie.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="frame header-row">
+      <a class="wordmark" href="index.html">NZ Data <em>After Hours</em></a>
+      <nav aria-label="Pages">
+        <a href="index.html">Favourites</a>
+        <a href="potential.html">Potential</a>
+        <a href="fresh-leads.html">Fresh Leads</a>
+        <a href="parliament.html">Parliament</a>
+        <a href="they-aired-that.html">They Aired That?</a>
+        <a href="pokie-money.html" aria-current="page">Pokie Money</a>
+      </nav>
+    </div>
+  </header>
+  <main class="frame grants" id="main">
+    <h1>Who Got the Pokie Money?</h1>
+    <section aria-labelledby="lookup">
+      <h2 id="lookup"><label for="query">Did your club get pokie money?</label></h2>
+      <input id="query" type="search" placeholder="Search a club, school, town or district" autocomplete="off">
+      <div class="examples">Try <button data-query="Manaia School">Manaia School</button><button data-query="Thames Museum">Thames Museum</button><button id="browse">Browse all records</button></div>
+      <div id="towns"></div>
+      <details id="filters"><summary>Filter applications</summary>
+        <div class="controls"><label>Year<select id="year"></select></label><label>Society<select id="society"></select></label><label>Outcome<select id="outcome"></select></label><label>Grant area<select id="scope"></select></label></div>
+      </details>
+      <div id="active" hidden><button id="clear">Clear search and filters</button></div>
+      <p role="status" id="status">178,731 application decisions · 8 separate refund records · 2021–2025</p>
+      <div id="records"></div><button id="more" hidden>Show more records</button>
+    </section>
+    <section class="district" aria-labelledby="district-title">
+      <h2 id="district-title">What did your district lose and receive?</h2>
+      <div class="controls"><label>District<select id="district"></select></label><label>Calendar year<select id="chart-year"></select></label></div>
+      <div id="chart" aria-live="polite"></div>
+      <p id="shared"></p><button id="district-records">See district records</button>
+      <details><summary>How the figures work</summary><p>Player losses are gaming machine profit at pubs and clubs, summed across four quarters in nominal NZ dollars. The grant bar counts gross approvals recorded against one district in the same calendar year. Refunds are shown in the records. Shared, national and unknown-area awards stay outside that bar. These figures describe where play and grants were recorded. They cannot trace a player’s money to a particular club.</p></details>
+    </section>
+    <footer>Source: Department of Internal Affairs, <a href="https://catalogue.data.govt.nz/dataset/class-4-grants-data">Class 4 grants</a> and <a href="https://catalogue.data.govt.nz/dataset/class-4-gambling-expenditure-by-quarter-and-district">district expenditure</a> (CC BY 4.0). Town lookup uses <a href="https://services.arcgis.com/yz3Bly07x1dczMks/arcgis/rest/services/statistical_area_1_higher_geographies_2023_generalised/FeatureServer">2023 Stats NZ geographies</a>. Town searches can be expanded to their district.</footer>
+    <noscript>Enable JavaScript to search the records or open the source files above.</noscript>
+  </main>
+</body></html>
