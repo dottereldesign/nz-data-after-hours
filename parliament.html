@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Parliament · NZ Data After Hours</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="parliament.css?v=20261121-rolls">
-  <script src="votes.js?v=20261121-rolls" defer></script>
-  <script src="portraits.js?v=20261121-rolls" defer></script>
+  <link rel="stylesheet" href="parliament.css?v=246-bills">
+  <script src="votes.js?v=246-bills" defer></script>
+  <script src="party-votes.js?v=246-bills" defer></script>
+  <script src="portraits.js?v=246-bills" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -24,7 +25,17 @@
   </header>
   <main class="frame" id="main">
     <h1>Parliament</h1>
-    <p>Explore bill readings with a published vote for each named MP, November 2022–November 2026. The closest Yes/No splits appear first.</p>
+    <p>Explore recorded readings across 246 bills, November 2022–November 2026. Pick a reading to see the party totals or, where Parliament named individual voters, their faces.</p>
+    <div class="explorer-controls">
+      <div class="bill-field">
+        <label for="vote-search">Find a bill</label>
+        <input type="search" id="vote-search" placeholder="e.g. Treaty, alcohol, housing">
+      </div>
+      <div class="bill-field type-field">
+        <label for="vote-type">Voting record</label>
+        <select id="vote-type"><option value="all">All readings</option><option value="named">Named MPs</option><option value="party">Party totals</option></select>
+      </div>
+    </div>
     <div class="explorer-controls">
       <div class="bill-field">
         <label for="bill">Choose a bill reading · closest votes first</label>
@@ -44,6 +55,7 @@
     <p id="context">MPs who served in the 53rd and 54th Parliaments. Select a bill to see how they voted.</p>
     <ul id="party-key" aria-label="Party colours" hidden></ul>
     <p class="sr-only" role="status" id="vote-status"></p>
+    <div id="party-board" hidden></div>
     <div id="seat-board" aria-label="Members of Parliament">
       <button type="button" aria-label="Adrian Rurawhe, Labour" aria-haspopup="dialog" data-name="Adrian Rurawhe" data-party="Labour" data-term="54th Parliament" data-credit="New Zealand Government, Office of the Governor-General" data-licence="CC BY 4.0" data-licence-url="https://creativecommons.org/licenses/by/4.0" data-source="https://commons.wikimedia.org/wiki/File:Adrian_Rurawhe_August_2022_(cropped).jpg"><img src="portraits/1410.webp" alt="" width="120" height="120"></button>
       <button type="button" aria-label="Andrew Bayly, National" aria-haspopup="dialog" data-name="Andrew Bayly" data-party="National" data-term="54th Parliament" data-credit="New Zealand National Party" data-licence="CC BY-SA 4.0" data-licence-url="https://creativecommons.org/licenses/by-sa/4.0" data-source="https://commons.wikimedia.org/wiki/File:BAYLY,_Andrew_-_Port_Waikato_(cropped).png"><img src="portraits/1395.webp" alt="" width="120" height="120"></button>

@@ -50,3 +50,12 @@
   .explorer-controls { gap: .55rem; }
   .switch button, .vote-pager button { padding-inline: .5rem; font-size: .9rem; }
 }
+#seat-board[hidden], #party-board[hidden] { display: none; }
+.bill-field { min-width: 0; }
+.bill-field input { min-width: 0; width: 100%; min-height: 44px; border: 1px solid #a89b9c; border-radius: .3rem; padding: .45rem .65rem; font: inherit; }
+.type-field { max-width: 13rem; }
+#party-board { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.2rem; margin-block: 1.5rem; }
+.party-list { display: grid; gap: .65rem; }
+.party-row { position: relative; display: flex; justify-content: space-between; gap: .4rem; padding: .45rem 0 .75rem; font-size: .95rem; }
+.party-row::after { content: ""; position: absolute; bottom: 0; left: 0; width: var(--share); height: 4px; background: var(--party); border-radius: 3px; }
+@media (max-width: 40rem) { .type-field { max-width: 100%; } }

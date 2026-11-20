@@ -20,19 +20,89 @@ const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const outcomes = { yes: "Yes", no: "No", abstain: "Abstained" };
 const unlisted = "Outside this roll call";
 
-// A close division is a reproducible measure of how split the House was.
-function marginShare(vote) {
-  return Math.abs(vote.yes.length - vote.no.length) / (vote.yes.length + vote.no.length);
+const partyBoard = document.querySelector("#party-board");
+const search = document.querySelector("#vote-search");
+const typeFilter = document.querySelector("#vote-type");
+const allVotes = { ...parliamentVotes, ...partyVotes };
+
+function totals(vote) {
+  if (vote.groups) return vote.totals;
+  return { yes: vote.yes.length, no: vote.no.length, abstain: vote.abstain.length };
 }
 
-const rankedVotes = Object.entries(parliamentVotes).sort(([, a], [, b]) =>
+function marginShare(vote) {
+  const { yes, no } = totals(vote);
+  return Math.abs(yes - no) / (yes + no || 1);
+}
+
+const rankedVotes = Object.entries(allVotes).sort(([, a], [, b]) =>
   marginShare(a) - marginShare(b) || Date.parse(b.date) - Date.parse(a.date)
 );
-for (const [id, vote] of rankedVotes) {
-  const tally = [vote.yes.length, vote.no.length];
-  if (vote.abstain.length) tally.push(vote.abstain.length);
-  const label = vote.shortTitle + " · " + vote.stage + " · " + tally.join("–");
-  bill.add(new Option(label, id));
+function searchable(text) {
+  return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+}
+
+function populateVotes(selectMatch = false) {
+  const previous = bill.value;
+  const query = searchable(search.value.trim());
+  bill.replaceChildren(new Option("Browse MPs by party", ""));
+  for (const [id, vote] of rankedVotes) {
+    const type = vote.groups ? "party" : "named";
+    if (typeFilter.value !== "all" && type !== typeFilter.value) continue;
+    if (!searchable([vote.title, vote.shortTitle, vote.date, vote.stage].join(" ")).includes(query)) continue;
+    const { yes, no, abstain } = totals(vote);
+    const count = [yes, no];
+    if (abstain) count.push(abstain);
+    const label = [vote.shortTitle || vote.title, vote.stage, vote.date, count.join("–")].join(" · ");
+    bill.add(new Option(label, id));
+  }
+  if (selectMatch) {
+    bill.value = previous;
+    if (!bill.value && bill.options.length > 1) bill.selectedIndex = 1;
+  }
+}
+populateVotes();
+
+function showPartyTotals(vote, animate) {
+  const positions = new Map();
+  if (animate && !partyBoard.hidden && !reducedMotion.matches) {
+    for (const row of partyBoard.querySelectorAll(".party-row")) {
+      positions.set(row.dataset.key, row.getBoundingClientRect());
+    }
+  }
+  const sections = [];
+  const used = new Set();
+  for (const [key, label] of Object.entries(outcomes)) {
+    const entries = Object.entries(vote.groups[key] || {}).sort((a, b) => b[1] - a[1]);
+    if (!entries.length && key === "abstain") continue;
+    const section = groupSection(label, false);
+    section.querySelector("h2 span").textContent = vote.totals[key];
+    const list = section.lastChild;
+    list.className = "party-list";
+    for (const [party, count] of entries) {
+      const row = document.createElement("div");
+      row.className = "party-row";
+      row.dataset.key = used.has(party) ? party + key : party;
+      used.add(party);
+      row.style.setProperty("--party", palette.get(party) || palette.get("Independent"));
+      row.style.setProperty("--share", (100 * count / Math.max(1, vote.totals.yes, vote.totals.no, vote.totals.abstain)) + "%");
+      const number = document.createElement("strong");
+      number.textContent = count;
+      row.append(party, number);
+      list.append(row);
+    }
+    sections.push(section);
+  }
+  partyBoard.replaceChildren(...sections);
+  partyBoard.hidden = false;
+  for (const row of partyBoard.querySelectorAll(".party-row")) {
+    const old = positions.get(row.dataset.key);
+    if (!old) continue;
+    const target = row.getBoundingClientRect();
+    const dx = old.left - target.left, dy = old.top - target.top;
+    if (dx || dy) row.animate([{ transform: "translate(" + dx + "px," + dy + "px)" }, { transform: "none" }],
+      { duration: 640, easing: "cubic-bezier(.22,.72,.15,1)" });
+  }
 }
 
 for (const [party, colour] of palette) {
@@ -55,12 +125,45 @@ function groupSection(label, partyView) {
 }
 
 function arrange(voteView, animate = true) {
-  const vote = parliamentVotes[bill.value];
+  const vote = allVotes[bill.value];
+  const empty = bill.options.length === 1;
+  previousVote.disabled = bill.selectedIndex <= 1;
+  nextVote.disabled = empty || bill.selectedIndex === bill.options.length - 1;
+  byVote.disabled = empty;
+  byParty.setAttribute("aria-pressed", String(!voteView));
+  byVote.setAttribute("aria-pressed", String(voteView));
+  partyKey.hidden = !voteView || Boolean(vote?.groups);
+  if (vote) {
+    const source = document.createElement("a");
+    source.href = vote.source;
+    source.textContent = vote.groups ? "Official division" : "Official roll call";
+    const { yes, no, abstain } = totals(vote);
+    const tally = [yes + " Yes", no + " No"];
+    if (abstain) tally.push(abstain + " abstained");
+    context.replaceChildren([vote.title, vote.stage, vote.date, vote.groups ? "Party vote" : "Named MP vote", tally.join(", ")].join(" · ") + ". ", source);
+    for (const [index, id] of (vote.billIds || []).entries()) {
+      const record = document.createElement("a");
+      record.href = "https://bills.parliament.nz/v/6/" + id;
+      record.textContent = vote.billIds.length === 1 ? "Bill history" : "Bill " + (index + 1) + " history";
+      context.append(" · ", record);
+    }
+    if (vote.note) context.append(" ", vote.note);
+  } else {
+    context.textContent = empty ? "No matching readings. Try another search or voting record." : "MPs who served in the 53rd and 54th Parliaments. Select a reading to see its vote.";
+  }
+  document.querySelector("#vote-status").textContent = context.textContent;
+  grid.hidden = (voteView && Boolean(vote?.groups)) || empty;
+  if (voteView && vote?.groups) {
+    showPartyTotals(vote, animate);
+    return;
+  }
+  partyBoard.hidden = true;
+  if (empty) return;
   const labels = voteView ? [...Object.values(outcomes), unlisted] : [...palette.keys()];
   const sections = new Map(labels.map(label => [label, groupSection(label, !voteView)]));
-  const positions = animate && !reducedMotion.matches ? tiles.map(tile => tile.getBoundingClientRect()) : [];
+  const positions = animate && !reducedMotion.matches && tiles[0].isConnected ? tiles.map(tile => tile.getBoundingClientRect()) : [];
   const roll = new Map();
-  if (vote) {
+  if (vote && !vote.groups) {
     for (const [key, label] of Object.entries(outcomes)) {
       for (const name of vote[key]) roll.set(name, label);
     }
@@ -82,22 +185,6 @@ function arrange(voteView, animate = true) {
   const visible = [...sections.values()].filter(section => section.lastChild.childElementCount);
   for (const section of visible) section.querySelector("h2 span").textContent = section.lastChild.childElementCount;
   grid.replaceChildren(...visible);
-  previousVote.disabled = bill.selectedIndex <= 1;
-  nextVote.disabled = bill.selectedIndex === bill.options.length - 1;
-  partyKey.hidden = !voteView;
-  byParty.setAttribute("aria-pressed", String(!voteView));
-  byVote.setAttribute("aria-pressed", String(voteView));
-  if (vote) {
-    const source = document.createElement("a");
-    source.href = vote.source;
-    source.textContent = "Official roll call";
-    const tally = [vote.yes.length + " Yes", vote.no.length + " No"];
-    if (vote.abstain.length) tally.push(vote.abstain.length + " abstained");
-    context.replaceChildren(vote.title + " · " + vote.stage + " · " + vote.date + " · " + tally.join(", ") + ". ", source);
-  } else {
-    context.textContent = "MPs who served in the 53rd and 54th Parliaments. Select a bill to see how they voted.";
-  }
-  document.querySelector("#vote-status").textContent = voteView ? context.textContent : "Grouped by party.";
   if (!positions.length) return;
   const targets = tiles.map(tile => tile.getBoundingClientRect());
   tiles.forEach((tile, i) => {
@@ -118,9 +205,18 @@ function stepVote(direction) {
 previousVote.addEventListener("click", () => stepVote(-1));
 nextVote.addEventListener("click", () => stepVote(1));
 bill.addEventListener("change", () => arrange(Boolean(bill.value)));
-byParty.addEventListener("click", () => arrange(false));
+byParty.addEventListener("click", () => {
+  bill.selectedIndex = 0;
+  arrange(false);
+});
+function filterReadings() {
+  populateVotes(true);
+  arrange(Boolean(bill.value));
+}
+search.addEventListener("input", filterReadings);
+typeFilter.addEventListener("change", filterReadings);
 byVote.addEventListener("click", () => {
-  if (!bill.value) bill.value = rankedVotes[0][0];
+  if (!bill.value) bill.selectedIndex = 1;
   arrange(true);
 });
 arrange(false, false);
