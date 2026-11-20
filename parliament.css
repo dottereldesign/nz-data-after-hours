@@ -41,3 +41,12 @@
 #mp-profile .profile-initials { color: white; }
 #mp-profile { width: min(23rem, 90vw); }
 #mp-profile .affiliation + .profile-vote { margin-top: .3rem; }
+
+.vote-pager { display: flex; gap: .35rem; }
+.vote-pager button { min-height: 44px; padding: .4rem .7rem; border: 1px solid #a89b9c; border-radius: .3rem; color: var(--ink); background: white; font: inherit; cursor: pointer; }
+.vote-pager button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 40rem) {
+  .bill-field { flex: 1 0 100%; min-width: 0; }
+  .explorer-controls { gap: .55rem; }
+  .switch button, .vote-pager button { padding-inline: .5rem; font-size: .9rem; }
+}

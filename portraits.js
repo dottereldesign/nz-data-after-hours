@@ -3,11 +3,13 @@ const tiles = Array.from(grid.querySelectorAll("button"));
 const bill = document.querySelector("#bill");
 const byParty = document.querySelector("#by-party");
 const byVote = document.querySelector("#by-vote");
+const previousVote = document.querySelector("#previous-vote");
+const nextVote = document.querySelector("#next-vote");
 const context = document.querySelector("#context");
 const partyKey = document.querySelector("#party-key");
 const palette = new Map([
   ["National", "#2376b9"], ["Labour", "#d53a47"], ["Green", "#248257"],
-  ["ACT", "#f5c83d"], ["NZ First", "#343239"], ["Te Pāti Māori", "#a52c32"],
+  ["ACT", "#f5c83d"], ["NZ First", "#343239"], ["Te Pāti Māori", "#7846ad"],
   ["Independent", "#787582"]
 ]);
 const panel = document.querySelector("#mp-profile");
@@ -17,6 +19,21 @@ const credit = panel.querySelector(".photo-credit");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const outcomes = { yes: "Yes", no: "No", abstain: "Abstained" };
 const unlisted = "Outside this roll call";
+
+// A close division is a reproducible measure of how split the House was.
+function marginShare(vote) {
+  return Math.abs(vote.yes.length - vote.no.length) / (vote.yes.length + vote.no.length);
+}
+
+const rankedVotes = Object.entries(parliamentVotes).sort(([, a], [, b]) =>
+  marginShare(a) - marginShare(b) || Date.parse(b.date) - Date.parse(a.date)
+);
+for (const [id, vote] of rankedVotes) {
+  const tally = [vote.yes.length, vote.no.length];
+  if (vote.abstain.length) tally.push(vote.abstain.length);
+  const label = vote.shortTitle + " · " + vote.stage + " · " + tally.join("–");
+  bill.add(new Option(label, id));
+}
 
 for (const [party, colour] of palette) {
   const key = document.createElement("li");
@@ -65,6 +82,8 @@ function arrange(voteView, animate = true) {
   const visible = [...sections.values()].filter(section => section.lastChild.childElementCount);
   for (const section of visible) section.querySelector("h2 span").textContent = section.lastChild.childElementCount;
   grid.replaceChildren(...visible);
+  previousVote.disabled = bill.selectedIndex <= 1;
+  nextVote.disabled = bill.selectedIndex === bill.options.length - 1;
   partyKey.hidden = !voteView;
   byParty.setAttribute("aria-pressed", String(!voteView));
   byVote.setAttribute("aria-pressed", String(voteView));
@@ -72,7 +91,9 @@ function arrange(voteView, animate = true) {
     const source = document.createElement("a");
     source.href = vote.source;
     source.textContent = "Official roll call";
-    context.replaceChildren(vote.stage + " · " + vote.date + " · " + vote.yes.length + " Yes, " + vote.no.length + " No. ", source);
+    const tally = [vote.yes.length + " Yes", vote.no.length + " No"];
+    if (vote.abstain.length) tally.push(vote.abstain.length + " abstained");
+    context.replaceChildren(vote.title + " · " + vote.stage + " · " + vote.date + " · " + tally.join(", ") + ". ", source);
   } else {
     context.textContent = "MPs who served in the 53rd and 54th Parliaments. Select a bill to see how they voted.";
   }
@@ -90,10 +111,16 @@ function arrange(voteView, animate = true) {
   });
 }
 
+function stepVote(direction) {
+  bill.selectedIndex += direction;
+  arrange(true);
+}
+previousVote.addEventListener("click", () => stepVote(-1));
+nextVote.addEventListener("click", () => stepVote(1));
 bill.addEventListener("change", () => arrange(Boolean(bill.value)));
 byParty.addEventListener("click", () => arrange(false));
 byVote.addEventListener("click", () => {
-  if (!bill.value) bill.value = "alcohol";
+  if (!bill.value) bill.value = rankedVotes[0][0];
   arrange(true);
 });
 arrange(false, false);
@@ -103,7 +130,7 @@ grid.addEventListener("click", event => {
   if (!tile) return;
 
   panel.querySelector("h2").textContent = tile.dataset.name;
-  panel.querySelector(".affiliation").textContent = tile.dataset.affiliation + " · " + tile.dataset.term;
+  panel.querySelector(".affiliation").textContent = tile.dataset.affiliation + " · " + (tile.dataset.result && tile.dataset.result !== unlisted && parliamentVotes[bill.value]?.session || tile.dataset.term);
   panel.style.setProperty("--party", palette.get(tile.dataset.affiliation));
   panel.querySelector(".profile-vote").textContent = tile.dataset.result;
   const thumbnail = tile.querySelector("img");
