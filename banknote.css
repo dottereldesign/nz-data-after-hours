@@ -1,16 +1,14 @@
 .money-hero {margin-bottom:2rem}
 .money-hero h1 {margin:0}
-.note-workbench {display:grid;grid-template-columns:minmax(0,1fr) 11.5rem;margin-top:1.25rem;border:1px solid #b7beb4;border-radius:14px;overflow:hidden;background:#f4f3eb}
-.note-stage {position:relative;min-width:0;height:clamp(290px,32vw,368px);overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 43% 30%,#466459 0%,#314d42 54%,#203b32 100%)}
-.note-stage::before {content:"";position:absolute;inset:0;opacity:.22;background-image:radial-gradient(#b7c8af 0.65px,transparent .85px);background-size:10px 10px;pointer-events:none}
-.note-photo {position:absolute;left:50%;top:50%;width:min(69%,390px);transform:translate(-50%,-50%) rotate(-6deg);box-shadow:4px 12px 15px #11241e66}
-.note-canvas {position:absolute;inset:0;width:100%;height:100%;outline-offset:-4px;filter:drop-shadow(3px 11px 6px #12292080)}
-.note-instruction {position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:.78rem;color:#f1f5ed;pointer-events:none}
-.note-stage:not(.ready) .note-instruction {display:none}
+.note-stage {position:relative;height:100vh;height:100dvh;overflow:hidden;background:var(--paper)}
+.note-photo {position:absolute;left:50%;top:50%;width:min(89vw,145vh,1160px);transform:translate(-50%,-50%) rotate(-6deg);box-shadow:3px 11px 10px #20251e30}
+.note-canvas {position:absolute;inset:0;width:100%;height:100%;outline-offset:-4px;pointer-events:none;filter:drop-shadow(3px 11px 6px #20251e30)}
+.note-grab {position:absolute;touch-action:none;cursor:grab}
+.note-grab:active {cursor:grabbing}
 .note-stage.ready .note-photo {display:none}
 .note-tools {padding:1.15rem;display:flex;flex-direction:column;justify-content:center;gap:1rem}
 .note-tools[hidden] {display:none}
-.note-actions {display:grid;grid-template-columns:1fr;gap:.36rem}
+.note-actions {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.36rem}
 .grants .note-actions button,.grants .note-reset {border-radius:6px;font-size:.93rem;line-height:1.1}
 .grants .note-actions button[aria-pressed="true"] {background:#264e3d;color:#fff;border-color:#264e3d}
 .note-adjust {display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 .4rem;color:#253d32;font-size:.85rem;font-weight:650}
@@ -18,4 +16,4 @@
 .note-adjust output {font-variant-numeric:tabular-nums}
 .grants .note-reset {color:#344a3e;background:transparent;border-color:#9da99f}
 .note-credit {margin:.45rem 0 0;font-size:.72rem;color:#575e58}
-@media(max-width:640px){.note-workbench {grid-template-columns:1fr}.note-stage{height:clamp(230px,66vw,325px)}.note-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.5rem 1rem;padding:.65rem}.note-actions{grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr))}.grants .note-actions button{padding:.36rem .15rem}.note-reset{align-self:center}}
+@media(max-width:640px){.note-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.5rem 1rem;padding:.65rem}.note-actions{grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr))}.grants .note-actions button{padding:.36rem .15rem}.note-reset{align-self:center}}

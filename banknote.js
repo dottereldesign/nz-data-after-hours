@@ -2,6 +2,7 @@
   "use strict";
   const stage = document.querySelector(".note-stage");
   const canvas = stage.querySelector("canvas");
+  const handle = stage.querySelector(".note-grab");
   const photo = stage.querySelector("img");
   const tools = document.querySelector(".note-tools");
   const range = document.querySelector("#note-range");
@@ -101,7 +102,7 @@
   let selected="roll",width=1,height=1,scale=1,frame=0,last=0,render;
   let x=0,y=0,tx=0,ty=0,vx=0,vy=0,lean=0,lift=0,grab=null,grabU=.5,grabV=.5;
   function resize(){
-    width=stage.clientWidth;height=stage.clientHeight;scale=Math.min(390,width*.85)/2;
+    width=stage.clientWidth;height=stage.clientHeight;scale=Math.min(1160,width*.89,height*1.45)/2;
     const dpr=Math.min(devicePixelRatio||1,4,Math.sqrt(4000000/(width*height)));
     canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
     constrain();wake();
@@ -132,6 +133,7 @@
     const spin=pose.turn*Math.PI*2, co=Math.cos(spin),si=Math.sin(spin);
     const tilt=-.10+lean, cs=Math.cos(tilt),sn=Math.sin(tilt);
     const rollStart=1-1.83*pose.roll,rollRadius=.20;
+    let left=width, top=height, right=0, bottom=0;
     for(const p of nodes){
       let X=2*p.u-1,Y=(2*p.v-1)*ratio,Z=0;
       // Bend the free edge along a cylinder, preserving distance around the roll.
@@ -154,7 +156,11 @@
       const perspective=4.8/(4.8-p.z);
       p.px=width/2+x+p.x*scale*perspective;
       p.py=height/2+y+p.y*scale*perspective;
+      left=Math.min(left,p.px);right=Math.max(right,p.px);
+      top=Math.min(top,p.py);bottom=Math.max(bottom,p.py);
     }
+    // Only the note captures touch. Swiping the blank stage scrolls the page.
+    Object.assign(handle.style,{left:left+"px", top:top+"px", width:(right-left)+"px", height:(bottom-top)+"px"});
     render();
     if(moving||Math.abs(tx-x)+Math.abs(ty-y)>.04||Math.abs(vx)+Math.abs(vy)>.5||Math.abs(lean)>.001||Math.abs(lift-(grab ? .13 : 0))>.001)wake();
   }
@@ -172,17 +178,17 @@
     }
     return result;
   }
-  canvas.addEventListener("pointerdown",e=>{
+  handle.addEventListener("pointerdown",e=>{
     if(grab||e.button!==0)return;
     const [px,py]=point(e), uv=hit(px,py);
     if(!uv)return;
     [grabU,grabV]=uv;
     grab={id:e.pointerId,px,py,t:e.timeStamp,ox:tx,oy:ty,startX:px,startY:py};
-    vx=vy=0;canvas.setPointerCapture(e.pointerId);canvas.style.cursor="grabbing";wake();
+    vx=vy=0;handle.setPointerCapture(e.pointerId);handle.style.cursor="grabbing";wake();
   });
-  canvas.addEventListener("pointermove",e=>{
+  handle.addEventListener("pointermove",e=>{
     const [px,py]=point(e);
-    if(!grab){if(e.pointerType==="mouse")canvas.style.cursor=hit(px,py)?"grab":"default";return;}
+    if(!grab){if(e.pointerType==="mouse")handle.style.cursor=hit(px,py)?"grab":"default";return;}
     if(e.pointerId!==grab.id)return;
     const dt=Math.max(.01,(e.timeStamp-grab.t)/1000);
     tx=grab.ox+px-grab.startX;ty=grab.oy+py-grab.startY;constrain();
@@ -192,9 +198,9 @@
   function release(e){
     if(!grab||e.pointerId!==grab.id)return;
     if(e.type!=="pointerup"||e.timeStamp-grab.t>90)vx=vy=0;
-    grab=null;canvas.style.cursor="grab";wake();
+    grab=null;handle.style.cursor="grab";wake();
   }
-  for(const name of ["pointerup","pointercancel","lostpointercapture"])canvas.addEventListener(name,release);
+  for(const name of ["pointerup","pointercancel","lostpointercapture"])handle.addEventListener(name,release);
   function controls(){
     for(const b of tools.querySelectorAll("[data-shape]"))b.setAttribute("aria-pressed",String(b.dataset.shape===selected));
     document.querySelector("#note-label").textContent=labels[selected];
@@ -220,7 +226,7 @@
   };
   async function start(){
     await photo.decode();render=makeRenderer();if(!render)return;
-    tools.hidden=false;stage.classList.add("ready");canvas.style.touchAction="none";
+    tools.hidden=false;stage.classList.add("ready");
     controls();resize();new ResizeObserver(resize).observe(stage);
   }
   start().catch(()=>{stage.classList.remove("ready");tools.hidden=true;});
