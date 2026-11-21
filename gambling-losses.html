@@ -6,6 +6,8 @@
   <title>Where did NZ lose the most? · NZ Data After Hours</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="pokie.css">
+  <script defer src="explore-common.js"></script>
+  <script defer src="annualBreakdown.js"></script>
   <script defer src="gambling-losses.js"></script>
   <link rel="stylesheet" href="gambling.css">
 </head>
@@ -32,11 +34,11 @@
       </nav>
     </div>
   </header>
-  <main class="frame grants gambling-data" id="main">
+  <main class="frame grants gambling-data explorer" id="main">
     <h1>Where did NZ lose the most?</h1>
     <p class="intro">Compare casinos, pub and club pokies, Lotto and TAB across 15 financial years.</p>
     <label>Financial year<select id="spend-year"></select></label>
-    <section aria-live="polite"><h2>Total player losses</h2><div class="headline-value" id="spend-total"></div><div id="spend-chart"></div></section>
+    <section aria-live="polite"><h2>Total player losses</h2><div id="spend-total"></div><div id="spend-chart"></div></section>
     <footer>Expenditure is the amount players lost after prizes, in NZ dollars at the time. Figures follow each operator’s financial year. These four categories exclude offshore gambling. <a href="https://catalogue.data.govt.nz/dataset/gambling-expenditure-statistics">Department of Internal Affairs expenditure workbook, 2010/11–2024/25</a>.</footer>
   </main>
 </body></html>

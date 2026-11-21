@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="pokie.css">
   <script defer src="explore-common.js"></script>
+  <script defer src="annualBreakdown.js"></script>
   <script defer src="odds.js"></script>
   <link rel="stylesheet" href="gambling.css">
 </head>
@@ -34,10 +35,11 @@
     </div>
   </header>
   <main class="frame grants gambling-data explorer" id="main">
-    <h1>What Are the Odds?</h1><p class="intro">Can two pokies return the same amount over time and still give you completely different nights?</p><p class="tap-hint">Tap a figure for its source and calculation.</p>
+    <h1>What Are the Odds?</h1><p class="intro">Explore NZ pub and club pokie figures and the published rules for single-zero roulette.</p><p class="tap-hint">Tap a figure for its source and calculation.</p>
     <label>Explore<select id="game"><option>Pokie machines</option><option>Casino roulette</option></select></label>
-    <section id="pokies"><h2>Two ways to return 92%</h2><p>Compare two invented machines. Each independent $1 bet either pays the amount shown or pays nothing.</p>
-    <div class="pair" id="machines"></div><h3>Twenty bets on each machine</h3><p>Filled dots paid out. Each strip is a fresh random example.</p><div id="strips" aria-live="polite"></div><button id="again">Show another 20 bets</button></section>
+    <section id="pokies"><h2>What did pokies pay back?</h2><p>DIA publishes national prizes and turnover for gaming machines outside casinos. These totals tell us the share of money paid back across all machines. A per-spin win probability requires the individual game’s payout rules.</p>
+    <label>Financial year<select id="pokie-year"></select></label><div id="pokie-figures"></div>
+    <h3>Where to find a particular game’s odds</h3><p>Regulation 7 requires a game-information feature covering win odds, including the five top and bottom winning combinations, and average payouts over a period or number of plays. <a href="https://www.legislation.govt.nz/regulation/public/2004/0276/latest/096be8ed81de5d03.pdf#page=5">NZ Gambling (Harm Prevention and Minimisation) Regulations, reg 7</a>.</p></section>
     <section id="roulette" hidden><h2>Is red a fifty-fifty bet?</h2><p>A single-zero wheel has 37 pockets. Choose a $1 bet to highlight the pockets that pay.</p><label>Your bet<select id="bet"><option value="red">Red</option><option value="number">One number (17)</option></select></label><div id="wheel" aria-hidden="true"></div><div id="wheel-maths"></div></section>
     <noscript>Enable JavaScript to explore the figures.</noscript>
   </main>

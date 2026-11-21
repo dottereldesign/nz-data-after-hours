@@ -109,7 +109,9 @@ function addRecords() {
         district.focus();
       }));
     }
-    card.append(actions);
+    const source = text("a","DIA grant applications (CSV)");
+    source.href = "https://catalogue.data.govt.nz/dataset/b6b7f1cc-bfa4-4c7a-81e8-8a03f2983cae/resource/06d99ad0-47d6-4591-84c7-8872a4f77da9/download/class-4-grants-dataset-csv.csv";
+    card.append(actions,source);
     fragment.append(card);
   }
   records.append(fragment);

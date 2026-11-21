@@ -4,19 +4,18 @@ const ageTable=["Stats NZ age bands · source file via Figure.NZ","https://figur
 const areas=Object.keys(districtSupply).sort((a,b)=>a.localeCompare(b,"en-NZ"));
 choices("area",areas);
 get("area").value="Auckland";
-function density(row) { return row[1]*1000/(row[3]+0.4*row[2]); }
+function density(row) { return row[1]*1000/row[2]; }
 function local() {
   const name=get("area").value, row=districtSupply[name];
-  const [venues,machines,teen,older]=row;
-  const adults=older+0.4*teen;
+  const [venues,machines,adults]=row;
   const extra=name==="Auckland"?" Auckland local-board counts are summed.":name.includes("+")?" DIA reports these two districts together; both populations are included.":"";
   get("area-title").textContent=name;
   const unavailable="DIA lists no separate June 2026 count for this area. It is excluded from the ranking.";
   get("local").replaceChildren(
     figure("Venues",venues==null?"Unreported":printed(venues),venues==null?unavailable:"DIA’s Venues count for pubs and clubs with Class 4 machines at the June 2026 quarter."+extra,dia),
     figure("Pokie machines",machines==null?"Unreported":printed(machines),machines==null?unavailable:"DIA’s EGMs count (electronic gaming machines) for the same area and quarter."+extra,dia),
-    figure("Machines per 1,000 estimated residents aged 18+",machines==null?"Unavailable":density(row).toFixed(2),machines==null?unavailable:
-    printed(machines)+" machines ÷ "+printed(adults)+" estimated adults × 1,000. We estimate age 18+ as "+printed(older)+" residents aged 20+ plus two fifths of "+printed(teen)+" aged 15–19, assuming equal numbers at each age within that band. Both sources refer to June 2026. Visitors can also use these machines."+extra,dia,population,ageTable));
+    figure("Machines per 1,000 residents aged 20+",machines==null?"Unavailable":density(row).toFixed(2),machines==null?unavailable:
+    printed(machines)+" machines ÷ "+printed(adults)+" residents aged 20+ × 1,000. The denominator sums Stats NZ’s published five-year age groups from 20–24 through 85–89, plus 90 and over (all sexes). Both sources refer to June 2026. Visitors can also use these machines."+extra,dia,population,ageTable));
   const linkbox=get("grants-link");
   linkbox.replaceChildren();
   for (const district of name.includes("+")?["Hurunui","Kaikoura"]:[name]) {

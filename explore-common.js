@@ -23,4 +23,4 @@ function choices(id, items) {
   for (const item of items) get(id).add(new Option(item,item));
 }
 const printed = n => n.toLocaleString("en-NZ");
-const officialSpend = ["DIA · annual expenditure workbook","https://catalogue.data.govt.nz/dataset/gambling-expenditure-statistics"];
+const officialSpend = ["DIA · Actual (nominal) statistics, 2010/11–2024/25 (XLSX)","https://catalogue.data.govt.nz/dataset/d4fa91a9-8569-41d5-adf6-2f1e9cbc447a/resource/941f3304-75a7-48b7-8af0-8d6733881a36/download/2011-2025-gambling-expenditure-statistics.xlsx"];

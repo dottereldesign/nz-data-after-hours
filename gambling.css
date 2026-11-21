@@ -7,9 +7,9 @@
 #leaderboard {border-block-start:3px double var(--ink)}
 #leaderboard .controls {margin:1rem 0}
 #rank-list details {border-top:1px solid var(--rule)}
-#rank-list summary {display:grid;align-items:baseline;grid-template-columns:2.1em minmax(0,1fr) auto 1em;gap:.2rem .5rem;padding:.85rem .3rem}
-#rank-list summary::after {content:"+";grid-area:1/4;color:var(--accent)}
-#rank-list details[open] summary::after {content:"−"}
+#rank-list > details > summary {display:grid;align-items:baseline;grid-template-columns:2.1em minmax(0,1fr) auto 1em;gap:.2rem .5rem;padding:.85rem .3rem}
+#rank-list > details > summary::after {content:"+";grid-area:1/4;color:var(--accent)}
+#rank-list > details[open] > summary::after {content:"−"}
 #rank-list summary span {color:#69616a;font: .9rem monospace}
 #rank-list summary b {color:var(--accent);font-variant-numeric:tabular-nums}
 #rank-list small {display:block;color:#574d55;font-weight:400}
@@ -52,7 +52,7 @@
 #wheel {display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:29rem;margin:1rem 0}
 #wheel span {text-align:center;border-radius:.2rem;background:#e9e4dd;padding:.5rem 0;color:#54504a}
 #wheel .lit {color:white;font-weight:700}#wheel .red {background:#94273c}#wheel .black {background:#28242a}
-.split-track {height:1.6rem;background:#922740;margin:1rem 0}.split-track i {display:block;height:100%;background:#28684f}
+.prize-share {height:1.6rem;background:#e9e4dd;margin:1rem 0}.prize-share i {display:block;height:100%;background:#28684f}
 #guess {display:block;width:min(100%,26rem);min-height:44px;accent-color:#912641}#guess-value {margin-right:.8rem;font-weight:700}
 .explorer .district-choice {display:flex;width:100%;justify-content:space-between;text-align:left;gap:.6rem;border:0;border-bottom:1px solid var(--rule);border-radius:0}
 #ranking {margin:1rem 0}

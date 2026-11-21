@@ -69,7 +69,15 @@ function drawRanks() {
     details.addEventListener("toggle", () => {
       if (details.open && !panel.hasChildNodes()) showRecipients(panel, row.area, year);
     });
-    details.append(summary,panel);
+    const maths = text("div", "");
+    maths.className = "source-note";
+    maths.append(text("strong","Source and calculation"), text("p", money(row.loss) + " in four quarters of player losses − " + money(row.grants) + " in approvals recorded against one district = " + money(row.gap) + ". Approvals ÷ losses × 100 = " + (100 * row.ratio).toFixed(1) + "%."));
+    for (const [label, url] of [["DIA grants CSV","https://catalogue.data.govt.nz/dataset/b6b7f1cc-bfa4-4c7a-81e8-8a03f2983cae/resource/06d99ad0-47d6-4591-84c7-8872a4f77da9/download/class-4-grants-dataset-csv.csv"], ["DIA quarterly losses CSV","https://catalogue.data.govt.nz/dataset/5f1d596c-ac85-400e-8457-894aba20f637/resource/b3ac5b15-5cc9-4d7b-aef4-7215efd8836b/download/quarterly-class-4-gambling-expenditure-by-district-csv.csv"]]) {
+      const source = text("a", label);
+      source.href = url;
+      maths.append(source, document.createElement("br"));
+    }
+    details.append(summary,maths,panel);
     list.append(details);
   }
   field("rank-more").textContent = expandedRanks ? "Show top 10" : "Show all " + ranked.length + " districts";
