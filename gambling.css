@@ -1,0 +1,31 @@
+.gambling-menu {position:relative;align-self:center}
+.gambling-menu summary {cursor:pointer;min-height:44px;padding:.75rem 0}
+.gambling-menu:has([aria-current]) summary {color:#ffb5be}
+.gambling-menu div {position:absolute;z-index:8;right:0;width:max-content;max-width:90vw;background:#211f25;box-shadow:0 5px 16px #0004;padding:.35rem .8rem;border-radius:.3rem}
+.gambling-menu a {padding:.7rem .3rem;border:0;min-height:44px}
+@media(max-width:48rem){.gambling-menu {position:static}.header-row nav {position:relative}.gambling-menu div {right:auto;left:0;width:100%}}
+#leaderboard {border-block-start:3px double var(--ink)}
+#leaderboard .controls {margin:1rem 0}
+#rank-list details {border-top:1px solid var(--rule)}
+#rank-list summary {display:grid;align-items:baseline;grid-template-columns:2.1em minmax(0,1fr) auto 1em;gap:.2rem .5rem;padding:.85rem .3rem}
+#rank-list summary::after {content:"+";grid-area:1/4;color:var(--accent)}
+#rank-list details[open] summary::after {content:"−"}
+#rank-list summary span {color:#69616a;font: .9rem monospace}
+#rank-list summary b {color:var(--accent);font-variant-numeric:tabular-nums}
+#rank-list small {display:block;color:#574d55;font-weight:400}
+#rank-list summary small {grid-column:2/-1}
+.recipient-panel {background:#f2efea;padding:1rem;overflow-wrap:anywhere}
+.recipient-panel h3 {margin:0}.recipient-panel ol {padding-left:2rem}
+.recipient-panel li {padding:.4rem 0}.recipient-panel small {margin-top:.2rem}
+#rank-more {margin-top:.75rem}
+#leaderboard > p,.gambling-data p {line-height:1.5}
+.gambling-data .intro {margin:.9rem 0 1.4rem;max-width:62ch}
+.gambling-data .bar-fill:not(.award) {background:#8e2541}
+.gambling-data .chart-row {padding:.35rem 0}
+.gambling-data .headline-value {font:700 clamp(2.2rem,6vw,3.5rem)/1.2 Georgia,serif;letter-spacing:-.04em}
+.gambling-data .period {border-top:1px solid var(--rule);margin-top:1rem;padding-top:1rem}
+.gambling-data h3 {margin:0 0 .4rem}
+.gambling-data select {max-width:20rem;display:block;margin-top:.35rem}
+.gambling-data footer {margin-top:2rem}
+
+.rank-jump a {display:inline-block;padding:.85rem 0;min-height:44px;font-weight:600}

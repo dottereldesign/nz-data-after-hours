@@ -142,11 +142,15 @@ async function search() {
   shown = 0;
   addRecords();
 }
+function annualLoss(figures) {
+  const quarters = Object.values(figures.quarter || {});
+  if (figures.combined || quarters.length !== 4 || !quarters.every(Number.isFinite)) return null;
+  return quarters.reduce((total, value) => total + value, 0);
+}
 function drawChart() {
   const area = district.value, year = chartYear.value;
   const t = districtSeries[year][area] || {};
-  const q = Object.values(t.quarter || {});
-  const loss = q.length === 4 && q.every(Number.isFinite) && !t.combined ? q.reduce((a,b)=>a+b,0) : null;
+  const loss = annualLoss(t);
   const chart = field("chart"); chart.replaceChildren();
   for (const [label, value, className] of [["Player losses",loss,""],["Grants approved for this district",t.grants || 0,"award"]]) {
     const line = text("div",label); line.className = "bar-label";
