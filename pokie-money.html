@@ -51,17 +51,17 @@
     </section>
     <section id="leaderboard" aria-labelledby="rank-title">
       <h2 id="rank-title">Which districts had the biggest gap?</h2>
-      <p>Compare what players lost on local pokies with approved grants recorded against one district. Tap a district to see its ten biggest named recipients.</p>
+      <p>Compare money lost on pokies with grants listed for one district. Tap a district to see who got the most.</p>
       <div class="controls"><label>Calendar year<select id="rank-year"></select></label><label>Rank districts by<select id="rank-sort"><option value="gap">Biggest dollar gap</option><option value="ratio">Lowest grants per dollar lost</option></select></label></div>
       <div id="rank-list"></div><button id="rank-more"></button>
-      <details><summary>What counts in the ranking?</summary><p>The dollar gap is player losses minus gross single-district approvals. The percentage is 100 × those approvals ÷ losses. A record naming just one district is included when its benefit-area field is blank. One recorded location cannot establish where every beneficiary lived. Shared and national grants, refunds and societies’ own spending sit outside this comparison. Recipients are grouped by their recorded organisation name. Spelling variants can appear separately.</p><p id="rank-omitted"></p></details>
+      <details><summary>What counts in the ranking?</summary><p>Gap = money lost minus grants approved. The percentage shows grants per $100 lost. We count grants listed for one district, even when the form leaves the benefit area blank. Others may benefit too. We leave out shared grants, national grants, refunds and societies’ own spending. Different spellings of a club’s name can appear separately.</p><p id="rank-omitted"></p></details>
     </section>
     <section class="district" aria-labelledby="district-title">
-      <h2 id="district-title">What did your district lose and receive?</h2>
+      <h2 id="district-title">How much was lost? How much went to grants?</h2>
       <div class="controls"><label>District<select id="district"></select></label><label>Calendar year<select id="chart-year"></select></label></div>
       <div id="chart" aria-live="polite"></div>
       <p id="shared"></p><button id="district-records">See district records</button>
-      <details><summary>How the figures work</summary><p>Player losses are gaming machine profit at pubs and clubs, summed across four quarters in nominal NZ dollars. The grant bar counts gross approvals recorded against one district in the same calendar year. Refunds are shown in the records. Shared, national and unknown-area awards stay outside that bar. These figures describe where play and grants were recorded. They cannot trace a player’s money to a particular club.</p></details>
+      <details><summary>How the figures work</summary><p>Losses are bets minus prizes at local pubs and clubs over the year. Grants are amounts approved for one recorded district, before refunds. You can see refunds in the records. Shared, national and unknown-area grants are left out.</p></details>
     </section>
     <footer>Source: Department of Internal Affairs, <a href="https://catalogue.data.govt.nz/dataset/class-4-grants-data">Class 4 grants</a> and <a href="https://catalogue.data.govt.nz/dataset/class-4-gambling-expenditure-by-quarter-and-district">district expenditure</a> (CC BY 4.0). Town lookup uses <a href="https://services.arcgis.com/yz3Bly07x1dczMks/arcgis/rest/services/statistical_area_1_higher_geographies_2023_generalised/FeatureServer">2023 Stats NZ geographies</a>. Town searches can be expanded to their district.</footer>
     <noscript>Enable JavaScript to search the records or open the source files above.</noscript>

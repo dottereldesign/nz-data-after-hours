@@ -7,10 +7,10 @@ function pokieReturn() {
   const share = 100 * prizes / turnover;
   const sheet = "DIA’s nominal statistics sheet, Gaming Machines (outside casinos), " + year + ". Values converted from NZD millions to NZ dollars and rounded to the nearest dollar.";
   get("pokie-figures").replaceChildren(
-    figure("Prizes as a share of turnover", share.toFixed(2) + "%", "$" + printed(prizes) + " in prizes ÷ $" + printed(turnover) + " in wagers × 100. This percentage measures dollars returned across the sector. The workbook gives no count of winning spins.", officialSpend),
+    figure("Paid back per $100 bet", "$" + share.toFixed(2), "$" + printed(prizes) + " in prizes ÷ $" + printed(turnover) + " in wagers × 100. That’s the average across NZ. One spin can pay more, less or nothing.", officialSpend),
     figure("Prizes", "$" + printed(prizes), sheet + " Prizes row.", officialSpend),
-    figure("Turnover", "$" + printed(turnover), sheet + " Turnover row. Turnover includes winnings wagered again.", officialSpend),
-    figure("Player expenditure", "$" + printed(loss), sheet + " Expenditure row.", officialSpend));
+    figure("Total money bet", "$" + printed(turnover), sheet + " Turnover row. Betting your winnings counts as another bet.", officialSpend),
+    figure("Total money lost", "$" + printed(loss), sheet + " Expenditure row.", officialSpend));
 }
 get("pokie-year").onchange = pokieReturn;
 pokieReturn();
@@ -24,9 +24,9 @@ function roulette() {
     get("wheel").append(element("span",n,lit ? "lit "+(red ? "red" : "black") : ""));
   }
   get("wheel-maths").replaceChildren(
-    figure("Chance of winning",(100*wins/37).toFixed(2)+"%",wins+" winning pockets ÷ 37 equally likely pockets × 100. Zero loses on this bet. This example uses standard single-zero roulette with no special zero rule.",casinoSource),
-    figure("Total returned on a winning $1 bet","$"+payout,"The winning bet earns $"+(payout-1)+" in winnings, plus the original $1 stake.",casinoSource),
-    figure("Theoretical house edge",(100*(1-wins*payout/37)).toFixed(2)+"%","For each $1 wagered, expected return is "+wins+"/37 × $"+payout+" = $0.97297. The expected loss is $1 − $0.97297, or about 2.70 cents.",casinoSource));
+    figure("Winning pockets",wins+" out of 37",wins+" winning pockets ÷ 37 equally likely pockets × 100 = "+(100*wins/37).toFixed(2)+"%. Zero loses on this single-zero wheel.",casinoSource),
+    figure("Get back if your $1 bet wins","$"+payout,"The winning bet earns $"+(payout-1)+" in winnings, plus the original $1 stake.",casinoSource),
+    figure("Average loss per $100 bet","$"+(100*(1-wins*payout/37)).toFixed(2),"For each $1 wagered, expected return is "+wins+"/37 × $"+payout+" = $0.97297. The expected loss is $1 − $0.97297, or about 2.70 cents.",casinoSource));
 }
 const districtCSV = ["DIA · quarterly GMP and machine counts (CSV)", "https://catalogue.data.govt.nz/dataset/4df114b8-5995-49e3-85df-185c7a30cf12/resource/0f3cbea0-57ac-4ac9-a89d-024c453e6947/download/gmp-quarterly-dashboard-dataset-csv.csv"];
 const report = ["DIA · how to interpret the June 2026 figures", "https://www.dia.govt.nz/gambling-statistics-gmp-dashboard"];
@@ -45,9 +45,8 @@ function showDistrict() {
   const loss = cents / 100;
   const average = dollars.format(loss / machines);
   const working = dollars.format(loss) + " in player losses ÷ " + printed(machines) + " licensed machines = " + average + " per machine for the quarter.";
-  const detail = figure("Quarterly loss per licensed machine", average, working, districtCSV, report);
-  detail.open = true;
-  panel.append(detail, element("p", "The numerator is all stakes less prizes (gaming machine profit) for the whole quarter. The denominator is the licensed machine count on 30 June. An individual machine’s losses and time in use can differ from this area average."));
+  const detail = figure("Average lost per machine", average, working, districtCSV, report);
+  panel.append(detail, element("p", "That’s three months of bets minus prizes, split across the machines licensed on 30 June."));
   if (area === "Auckland") panel.append(element("p","Auckland combines the local-board records in DIA’s file before division."));
   if (area.includes("+")) panel.append(element("p","DIA reports Hurunui and Kaikōura together for this quarter."));
 }
