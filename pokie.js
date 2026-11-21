@@ -174,3 +174,8 @@ field("more").addEventListener("click",addRecords);
 district.addEventListener("change",drawChart); chartYear.addEventListener("change",drawChart);
 field("district-records").addEventListener("click",()=>selectArea(district.value,chartYear.value));
 drawChart();
+const incomingDistrict = new URLSearchParams(location.search).get("district");
+if (grantDistricts.includes(incomingDistrict)) {
+  district.value = incomingDistrict;
+  drawChart();
+}

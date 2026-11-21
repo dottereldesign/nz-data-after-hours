@@ -29,3 +29,32 @@
 .gambling-data footer {margin-top:2rem}
 
 .rank-jump a {display:inline-block;padding:.85rem 0;min-height:44px;font-weight:600}
+.gambling-menu[open] > div {max-height:min(65vh,26rem);overflow-y:auto}
+.explorer {max-width:65rem}
+.explorer .tap-hint {font-size:.92rem;color:#5c5057;margin-bottom:1rem}
+.explorer section {border-top:1px solid var(--rule);margin-top:1.4rem}
+.explorer h3 {font-size:1.25rem;margin:1.4rem 0 .6rem}
+.explorer .figure {margin:.4rem 0;border-bottom:1px solid #cfc5c7}
+.explorer .figure summary {display:grid;align-items:center;grid-template-columns:minmax(0,1fr) auto 1rem;gap:.6rem;padding:.8rem .2rem;min-height:48px}
+.figure summary::after {content:"+";color:var(--accent)}
+.figure[open] summary::after {content:"−"}
+.figure summary strong {color:var(--accent);font-variant-numeric:tabular-nums}
+.source-note {background:#f1ede7;padding:.9rem 1rem;border-left:3px solid #735251}
+.source-note a {display:block;width:fit-content;color:#7f1934;padding:.5rem 0;text-decoration:underline}
+.pair {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin-top:1rem}
+.odds-card {padding:1rem;background:#f5f1eb;border:1px solid #d2c7bd}
+.explorer .odds-card h3 {margin:0 0 .5rem;font-family:Georgia,serif}
+.strip {display:grid;grid-template-columns:repeat(20,1fr);gap:3px;max-width:38rem;margin:.75rem 0 1.25rem}
+.strip i,#dots i {aspect-ratio:1;border-radius:50%;background:#dfd9d4}
+.strip .hit,#dots .hit {background:#25674f}
+#dots .overseas {background:#912641;box-shadow:inset 0 0 0 2px #471324}
+#dots {max-width:20rem;display:grid;grid-template-columns:repeat(10,1fr);gap:.34rem;margin:1.1rem 0}
+#wheel {display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:29rem;margin:1rem 0}
+#wheel span {text-align:center;border-radius:.2rem;background:#e9e4dd;padding:.5rem 0;color:#54504a}
+#wheel .lit {color:white;font-weight:700}#wheel .red {background:#94273c}#wheel .black {background:#28242a}
+.split-track {height:1.6rem;background:#922740;margin:1rem 0}.split-track i {display:block;height:100%;background:#28684f}
+#guess {display:block;width:min(100%,26rem);min-height:44px;accent-color:#912641}#guess-value {margin-right:.8rem;font-weight:700}
+.explorer .district-choice {display:flex;width:100%;justify-content:space-between;text-align:left;gap:.6rem;border:0;border-bottom:1px solid var(--rule);border-radius:0}
+#ranking {margin:1rem 0}
+.explorer .controls select {max-width:100%}
+.explorer button:focus-visible,.figure summary:focus-visible {outline:3px solid #406a99}

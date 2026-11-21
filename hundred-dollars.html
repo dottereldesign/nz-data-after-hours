@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The $100 Breakdown · NZ Data After Hours</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pokie.css">
+  <script defer src="explore-common.js"></script>
+  <script defer src="annualBreakdown.js"></script>
+  <script defer src="hundred-dollars.js"></script>
+  <link rel="stylesheet" href="gambling.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="frame header-row">
+      <a class="wordmark" href="index.html">NZ Data <em>After Hours</em></a>
+      <nav aria-label="Pages">
+        <a href="index.html">Favourites</a>
+        <a href="potential.html">Potential</a>
+        <a href="fresh-leads.html">Fresh Leads</a>
+        <a href="parliament.html">Parliament</a>
+        <a href="they-aired-that.html">They Aired That?</a>
+        <details class="gambling-menu"><summary>Gambling</summary><div>
+          <a href="pokie-money.html">Pokie Money</a>
+          <a href="gambling-losses.html">NZ Gambling Losses</a>
+          <a href="online-gambling.html">Offshore Gambling</a>
+          <a href="odds.html">What Are the Odds?</a>
+          <a href="hundred-dollars.html" aria-current="page">The $100 Breakdown</a>
+          <a href="pokies-near-you.html">Pokies Near You</a>
+          <a href="how-nz-gambles.html">How NZ Gambles</a>
+        </div></details>
+      </nav>
+    </div>
+  </header>
+  <main class="frame grants gambling-data explorer" id="main">
+    <h1>The $100 Breakdown</h1><p class="intro">For every $100 wagered, how much came back in prizes?</p><p class="tap-hint">Tap a figure for its source and calculation.</p>
+    <div class="controls"><label>Activity<select id="product"></select></label><label>Financial year<select id="year"></select></label></div><section><div id="guess-box"><label for="guess">Guess the dollars paid in prizes</label><input type="range" id="guess" min="0" max="100" value="50"><output for="guess" id="guess-value">$50</output> <button id="reveal">Reveal the figures</button></div><div id="split" aria-live="polite"></div></section>
+    <noscript>Enable JavaScript to explore the figures.</noscript>
+  </main>
+</body></html>
