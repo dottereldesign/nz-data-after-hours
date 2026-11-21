@@ -53,11 +53,13 @@ function showDistrict() {
 get("odds-area").onchange = showDistrict;
 function showTopic() {
   const topic = get("game").value;
+  get("games").hidden = topic !== "games";
   get("pokies").hidden = topic !== "national";
   get("roulette").hidden = topic !== "roulette";
   get("district").hidden = topic !== "district";
 }
-if (location.hash === "#district") get("game").value = "district";
+const linkedTopic = {"#district":"district","#roulette":"roulette","#pokies":"national","#games":"games"}[location.hash];
+if (linkedTopic) get("game").value = linkedTopic;
 get("game").onchange = showTopic;
 showDistrict();
 showTopic();
