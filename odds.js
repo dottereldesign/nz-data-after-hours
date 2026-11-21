@@ -28,7 +28,40 @@ function roulette() {
     figure("Total returned on a winning $1 bet","$"+payout,"The winning bet earns $"+(payout-1)+" in winnings, plus the original $1 stake.",casinoSource),
     figure("Theoretical house edge",(100*(1-wins*payout/37)).toFixed(2)+"%","For each $1 wagered, expected return is "+wins+"/37 × $"+payout+" = $0.97297. The expected loss is $1 − $0.97297, or about 2.70 cents.",casinoSource));
 }
-get("game").onchange=()=>{const casino=get("game").selectedIndex===1;get("roulette").hidden=!casino;get("pokies").hidden=casino;};
+const districtCSV = ["DIA · quarterly GMP and machine counts (CSV)", "https://catalogue.data.govt.nz/dataset/4df114b8-5995-49e3-85df-185c7a30cf12/resource/0f3cbea0-57ac-4ac9-a89d-024c453e6947/download/gmp-quarterly-dashboard-dataset-csv.csv"];
+const report = ["DIA · how to interpret the June 2026 figures", "https://www.dia.govt.nz/gambling-statistics-gmp-dashboard"];
+const dollars = new Intl.NumberFormat("en-NZ", {style:"currency", currency:"NZD"});
+choices("odds-area", Object.keys(districtSupply).sort((a,b) => a.localeCompare(b,"en-NZ")));
+get("odds-area").value = "Christchurch";
+function showDistrict() {
+  const area = get("odds-area").value;
+  const [, machines, , cents] = districtSupply[area];
+  const panel = get("city-working");
+  panel.replaceChildren();
+  if (cents == null || !machines) {
+    panel.append(figure("Loss per licensed machine", "Unavailable", "The file has no separate June 2026 figures for this district.", districtCSV));
+    return;
+  }
+  const loss = cents / 100;
+  const average = dollars.format(loss / machines);
+  const working = dollars.format(loss) + " in player losses ÷ " + printed(machines) + " licensed machines = " + average + " per machine for the quarter.";
+  const detail = figure("Quarterly loss per licensed machine", average, working, districtCSV, report);
+  detail.open = true;
+  panel.append(detail, element("p", "The numerator is all stakes less prizes (gaming machine profit) for the whole quarter. The denominator is the licensed machine count on 30 June. An individual machine’s losses and time in use can differ from this area average."));
+  if (area === "Auckland") panel.append(element("p","Auckland combines the local-board records in DIA’s file before division."));
+  if (area.includes("+")) panel.append(element("p","DIA reports Hurunui and Kaikōura together for this quarter."));
+}
+get("odds-area").onchange = showDistrict;
+function showTopic() {
+  const topic = get("game").value;
+  get("pokies").hidden = topic !== "national";
+  get("roulette").hidden = topic !== "roulette";
+  get("district").hidden = topic !== "district";
+}
+if (location.hash === "#district") get("game").value = "district";
+get("game").onchange = showTopic;
+showDistrict();
+showTopic();
 get("bet").onchange=roulette;
 
 roulette();
