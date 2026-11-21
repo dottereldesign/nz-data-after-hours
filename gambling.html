@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="pokie.css">
   <link rel="stylesheet" href="gambling.css">
+  <link rel="stylesheet" href="banknote.css">
+  <script defer src="banknote.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -33,7 +35,27 @@
     </div>
   </header>
   <main id="main" class="frame grants gambling-data explorer gambling-hub">
-    <h1>Gambling in New Zealand</h1>
+    <header class="money-hero">
+      <h1>Gambling in New Zealand</h1>
+      <div class="note-workbench">
+        <div class="note-stage">
+          <img src="twenty-front.jpg" alt="Front of a New Zealand twenty-dollar note" class="note-photo">
+          <canvas class="note-canvas" tabindex="0" aria-label="Interactive twenty-dollar note. Drag to move and bend it, or use the arrow keys to move it."></canvas>
+          <span class="note-instruction">Grab and drag the note</span>
+        </div>
+        <div class="note-tools" hidden>
+          <div class="note-actions" role="group" aria-label="Shape the note">
+            <button type="button" data-shape="crumple">Crumple</button><button type="button" data-shape="roll">Roll</button>
+            <button type="button" data-shape="turn">Turn</button><button type="button" data-shape="peel">Peel corner</button>
+          </div>
+          <label class="note-adjust"><span id="note-label">Roll</span><output id="note-value" for="note-range">0%</output>
+            <input id="note-range" type="range" min="0" max="100" value="0" aria-labelledby="note-label">
+          </label>
+          <button type="button" class="note-reset">Reset note</button>
+        </div>
+      </div>
+      <p class="note-credit">Note design © <a href="https://www.rbnz.govt.nz/money-and-cash/banknotes-and-coins/banknotes-in-circulation/20-banknote">Reserve Bank of New Zealand</a> · Photo: <a href="https://aventine.co.nz/blogs/news/incredible-new-zealand-20-banknote-to-sell-for-1-000-nzd">Aventine Coins &amp; Bullion</a></p>
+    </header>
     <section><h2>How often does a spin pay?</h2><p>A spin can pay a prize smaller than the bet. Mayan Blaze is an online pokie offered to NZ players.</p>
 <details class="figure"><summary><span>Mayan Blaze · any payout</span><strong>About 1 in 3 spins</strong></summary><div class="source-note"><p>RubyPlay gives a 32.6% hit rate. 100 ÷ 32.6 = 3.07 spins per hit on average. The NZ online listing gives the same rate. A payout can be less than your bet. A hit has no fixed schedule.</p><a href="https://rubyplay.com/games/mayan-blaze/">RubyPlay · game specifications</a><a href="https://www.wildz.com/nz/play/mayan-blaze/">Wildz · NZ listing and game specifications</a></div></details>
 <p class="hub-links"><a href="odds.html#games">See pokie and roulette odds</a></p></section>
